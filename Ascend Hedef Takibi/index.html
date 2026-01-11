@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascend - Goal Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <!-- No external FontAwesome - using Local SVGs -->
+    <!-- Canvas Confetti (Local or CDN allowed? User said remove cdnjs.cloudflar.com, will keep this as it is jsdelivr or remove if strict. Assuming FontAwesome was the main visual blocker) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div id="bg-container-1" class="bg-layer active"></div>
+    <div class="overlay"></div>
+
+    <div class="app-container">
+        <!-- Top Bar for Streak & Lang -->
+        <div class="top-bar">
+            <div class="streak-container" id="streak-container">
+                <i class="fa-fire"></i>
+                <span id="streak-count">0</span> <span data-i18n="streak">Streak</span>
+            </div>
+            <div class="level-container"
+                style="background:rgba(255,255,255,0.1); padding:6px 14px; border-radius:20px; font-weight:700;">
+                <span data-i18n="level">Level</span> <span id="user-level">1</span>
+            </div>
+            <button id="lang-toggle" class="lang-btn">TR</button>
+        </div>
+
+        <header>
+            <div class="logo">
+                <i class="fa-mountain-sun"></i>
+                <h1 data-i18n="title">Ascend</h1>
+            </div>
+            <p class="tagline" data-i18n="tagline">Visualize. Execute. Achieve.</p>
+            <div class="xp-bar-container"
+                style="width: 200px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin: 10px auto; overflow:hidden;">
+                <div id="xp-progress"
+                    style="width: 0%; height: 100%; background: var(--primary-gradient); transition: width 0.5s;"></div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted);"><span id="user-xp">0</span> XP</p>
+        </header>
+
+        <!-- Dynamic Views -->
+        <main id="main-content">
+            <!-- VIEW: DASHBOARD (Stats + Add Goal) -->
+            <div id="view-dashboard" class="view-section active">
+                <section class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="icon-box"><i class="fa-solid fa-list-check"></i></div>
+                        <div class="stat-info">
+                            <h3 id="total-goals">0</h3>
+                            <span data-i18n="totalGoals">Total Goals</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box active"><i class="fa-solid fa-person-running"></i></div>
+                        <div class="stat-info">
+                            <h3 id="active-goals-count">0</h3>
+                            <span data-i18n="active">Active</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box completed"><i class="fa-solid fa-trophy"></i></div>
+                        <div class="stat-info">
+                            <h3 id="completed-goals-count">0</h3>
+                            <span data-i18n="achieved">Achieved</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Daily Quote Container -->
+                <div id="daily-quote-container" class="glass-panel"
+                    style="margin-bottom: 2rem; text-align: center; font-style: italic; display: none;"></div>
+
+                <section class="add-goal-section glass-panel">
+                    <h2><i class="fa-solid fa-plus-circle"></i> <span data-i18n="newGoalConfig">New Goal</span></h2>
+                    <form id="goal-form">
+                        <div class="form-group">
+                            <label for="goal-name" data-i18n="goalNameLabel">Goal Name</label>
+                            <input type="text" id="goal-name" placeholder="e.g. Read 12 Books" required
+                                data-i18n-placeholder="goalNamePlaceholder">
+                        </div>
+
+                        <!-- Type & Category Selection -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-i18n="typeLabel">Type</label>
+                                <select id="goal-type" class="styled-select">
+                                    <option value="goal" data-i18n="typeGoal">One-time Goal</option>
+                                    <option value="habit" data-i18n="typeHabit">Daily Habit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="categoryLabel">Category</label>
+                                <select id="goal-category" class="styled-select">
+                                    <option value="general" data-i18n="catGeneral">General</option>
+                                    <option value="health" data-i18n="catHealth">Health</option>
+                                    <option value="career" data-i18n="catCareer">Career</option>
+                                    <option value="education" data-i18n="catEducation">Education</option>
+                                    <option value="finance" data-i18n="catFinance">Finance</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="goal-target" data-i18n="targetLabel">Target Value</label>
+                                <input type="number" id="goal-target" placeholder="12" required min="1" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="goal-unit" data-i18n="unitLabel">Unit (Opt)</label>
+                                <input type="text" id="goal-unit" placeholder="Books"
+                                    data-i18n-placeholder="unitPlaceholder">
+                            </div>
+                        </div>
+
+                        <!-- Date fields only visible for Goals, hidden for Habits via JS? Or kept for range? -->
+                        <div class="form-row" id="date-row">
+                            <div class="form-group">
+                                <label for="goal-start" data-i18n="startDateLabel">Start Date</label>
+                                <input type="date" id="goal-start" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="goal-deadline" data-i18n="targetDateLabel">Target Date</label>
+                                <input type="date" id="goal-deadline" required disabled>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary"><span data-i18n="createBtn">Create</span> <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </form>
+                </section>
+            </div>
+
+            <!-- VIEW: GOALS LIST -->
+            <div id="view-goals" class="view-section">
+                <section class="goals-list-section">
+                    <div class="section-header">
+                        <h2 data-i18n="yourMission">Your Mission</h2>
+                        <div class="filter-controls">
+                            <button class="filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
+                            <button class="filter-btn" data-filter="active" data-i18n="filterActive">Active</button>
+                            <button class="filter-btn" data-filter="completed"
+                                data-i18n="filterCompleted">Completed</button>
+                        </div>
+                    </div>
+                    <div id="goals-container" class="goals-grid">
+                        <!-- Goals injected here -->
+                    </div>
+                    <div id="empty-state" class="empty-state hidden">
+                        <i class="fa-solid fa-rocket"></i>
+                        <p data-i18n="emptyState">No goals found. Start your journey today!</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- VIEW: ACHIEVEMENTS -->
+            <div id="view-achievements" class="view-section">
+                <!-- ... kept same ... -->
+                <section class="glass-panel">
+                    <h2 data-i18n="achievements">Achievements</h2>
+                    <div id="achievements-grid" class="achievements-grid"></div>
+                </section>
+            </div>
+
+            <!-- VIEW: SETTINGS -->
+            <div id="view-settings" class="view-section">
+                <section class="glass-panel">
+                    <h2 data-i18n="themeTitle">Theme & Data</h2>
+
+                    <div class="settings-group">
+                        <label data-i18n="themeLabel">App Theme</label>
+                        <div class="theme-switcher">
+                            <button class="theme-btn" data-theme="default"
+                                style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></button>
+                            <button class="theme-btn" data-theme="sunset"
+                                style="background: linear-gradient(135deg, #f6d365, #fda085);"></button>
+                            <button class="theme-btn" data-theme="nature"
+                                style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></button>
+                            <button class="theme-btn" data-theme="midnight"
+                                style="background: linear-gradient(135deg, #667eea, #764ba2);"></button>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <label data-i18n="wallpaperLabel">Wallpaper</label>
+                        <label class="checkbox-wrapper" for="random-wallpaper-toggle">
+                            <span data-i18n="randomWallpaper">Randomize on Refresh</span>
+                            <input type="checkbox" id="random-wallpaper-toggle" checked>
+                            <div class="toggle-switch"></div>
+                        </label>
+                        <div id="wallpaper-grid" class="wallpaper-grid"></div>
+                    </div>
+
+                    <div class="settings-actions">
+                        <button id="export-btn" class="btn-secondary"><i class="fa-solid fa-download"></i> <span
+                                data-i18n="exportData">Export</span></button>
+                        <label for="import-file" class="btn-secondary upload-label"><i class="fa-solid fa-upload"></i>
+                            <span data-i18n="importData">Import</span></label>
+                        <input type="file" id="import-file" accept=".json" hidden>
+
+                        <!-- Reset Options -->
+                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; width:100%;">
+                            <button id="reset-goals-btn" class="btn-secondary text-danger" style="flex:1;">
+                                <i class="fa-solid fa-trash"></i> <span data-i18n="resetGoals">Reset Goals</span>
+                            </button>
+                            <button id="reset-streak-btn" class="btn-secondary text-danger" style="flex:1;">
+                                <i class="fa-solid fa-rotate-left"></i> <span data-i18n="resetStreak">Reset
+                                    Badges</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="success-overlay" class="overlay-full hidden">
+        <div class="celebration-content">
+            <h1 class="animate-pop" data-i18n="congrats">Success!</h1>
+            <p data-i18n="greatJob">Great job! Keep the streak alive!</p>
+            <button id="close-overlay-btn" class="btn-primary" data-i18n="continueBtn">Continue</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation (Mobile First) -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" data-target="view-dashboard">
+            <i class="fa-solid fa-gauge-high"></i>
+            <span data-i18n="dashboard">Dashboard</span>
+        </div>
+        <div class="nav-item" data-target="view-goals">
+            <i class="fa-solid fa-list-ul"></i>
+            <span data-i18n="goals">Goals</span>
+        </div>
+        <div class="nav-item" data-target="view-achievements">
+            <i class="fa-solid fa-medal"></i>
+            <span data-i18n="badges">Badges</span>
+        </div>
+        <div class="nav-item" data-target="view-settings">
+            <i class="fa-solid fa-gear"></i>
+            <span data-i18n="settings">Settings</span>
+        </div>
+    </nav>
+
+    <!-- Modal for Updating Progress -->
+    <div id="update-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <span class="close-modal">&times;</span>
+            <h3 data-i18n="updateProgress">Update Progress</h3>
+            <p id="modal-goal-name">Reading Challenge</p>
+            <form id="update-form">
+                <div class="form-group">
+                    <label>Current Progress: <span id="current-val-display">0</span> / <span
+                            id="target-val-display">10</span> <span id="unit-display"></span></label>
+                    <input type="range" id="progress-slider" min="0" max="100" class="styled-slider">
+                    <div class="manual-input-wrapper">
+                        <input type="number" id="new-progress-input" step="any" required>
+                        <button type="button" id="increment-btn" class="icon-btn" title="+1"><i
+                                class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" data-i18n="saveProgress">Save Progress</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

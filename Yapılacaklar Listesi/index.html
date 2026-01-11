@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modern yapılacaklar listesi uygulaması - Görevlerinizi kolayca yönetin">
+    <title>Yapılacaklar Listesi | Modern To-Do App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">✓</span>
+                    <h1>Yapılacaklar</h1>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Tema değiştir">
+                    <span class="theme-icon sun">☀️</span>
+                    <span class="theme-icon moon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Add Task Section -->
+            <section class="add-task-section">
+                <form class="add-task-form" id="addTaskForm">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            class="task-input" 
+                            id="taskInput" 
+                            placeholder="Yeni görev ekle..."
+                            autocomplete="off"
+                            required
+                        >
+                        <select class="priority-select" id="prioritySelect">
+                            <option value="low">🟢 Düşük</option>
+                            <option value="medium" selected>🟡 Orta</option>
+                            <option value="high">🔴 Yüksek</option>
+                        </select>
+                        <button type="submit" class="add-btn">
+                            <span class="add-icon">+</span>
+                            <span class="add-text">Ekle</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Controls Section -->
+            <section class="controls-section">
+                <div class="filter-group">
+                    <label class="control-label">Filtrele:</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">Tümü</button>
+                        <button class="filter-btn" data-filter="active">Aktif</button>
+                        <button class="filter-btn" data-filter="completed">Tamamlanan</button>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="control-label">Öncelik:</label>
+                    <div class="filter-buttons">
+                        <button class="priority-filter-btn active" data-priority="all">Tümü</button>
+                        <button class="priority-filter-btn" data-priority="high">🔴 Yüksek</button>
+                        <button class="priority-filter-btn" data-priority="medium">🟡 Orta</button>
+                        <button class="priority-filter-btn" data-priority="low">🟢 Düşük</button>
+                    </div>
+                </div>
+                <div class="sort-group">
+                    <label class="control-label">Sırala:</label>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="date-desc">📅 En Yeni</option>
+                        <option value="date-asc">📅 En Eski</option>
+                        <option value="priority-desc">⬆️ Öncelik (Yüksek-Düşük)</option>
+                        <option value="priority-asc">⬇️ Öncelik (Düşük-Yüksek)</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalTasks">0</span>
+                    <span class="stat-label">Toplam</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="activeTasks">0</span>
+                    <span class="stat-label">Aktif</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="completedTasks">0</span>
+                    <span class="stat-label">Tamamlanan</span>
+                </div>
+            </section>
+
+            <!-- Tasks List -->
+            <section class="tasks-section">
+                <div class="tasks-header">
+                    <h2>Görevler</h2>
+                    <button class="clear-completed-btn" id="clearCompletedBtn">
+                        🗑️ Tamamlananları Temizle
+                    </button>
+                </div>
+                <div class="tasks-list" id="tasksList">
+                    <!-- Tasks will be rendered here -->
+                </div>
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">📝</div>
+                    <p class="empty-title">Henüz görev yok</p>
+                    <p class="empty-subtitle">Yukarıdan yeni bir görev ekleyerek başlayın</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 Yapılacaklar Listesi | Tüm hakları saklıdır.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
