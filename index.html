@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebKitApps - Mini Web Araçları</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Genel Stil */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .card i {
+            font-size: 40px;
+            color: #2575fc;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: #2575fc;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .card a:hover {
+            background: #1a5bd8;
+        }
+
+        @media(max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebKitApps - Mini Web Araçları</h1>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-wallet"></i>
+                <h2>Gelir-Gider Takip</h2>
+                <p>Kişisel gelir ve giderlerinizi kolayca takip edin.</p>
+                <a href="Gelir-Gider takip programı/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-chart-line"></i>
+                <h2>Güncel Kur Takip</h2>
+                <p>Döviz kurlarını hızlı ve güncel şekilde kontrol edin.</p>
+                <a href="Güncel kur takip programı/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-lightbulb"></i>
+                <h2>Hayat Kolaylaştıran Projeler</h2>
+                <p>Günlük hayatınızı kolaylaştıracak mini uygulamalar.</p>
+                <a href="Hayat Kolaylaştıran Projeler/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-hourglass-half"></i>
+                <h2>Ne Kadar Zamandır Yaşıyorsun?</h2>
+                <p>Doğum tarihinizden bugüne geçen zamanı hesaplayın.</p>
+                <a href="ne kadar zamandır yaşıyorsun/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-exchange-alt"></i>
+                <h2>Para Birimi Çevirici</h2>
+                <p>Dövizler arasında hızlı ve pratik dönüşüm yapın.</p>
+                <a href="Para birim çevirici/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-key"></i>
+                <h2>Rastgele Şifre Oluşturucu</h2>
+                <p>Güvenli ve rastgele şifreler oluşturun.</p>
+                <a href="Rastgele şifre oluşturucu/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-clock"></i>
+                <h2>Saat Uygulaması</h2>
+                <p>Gerçek zamanlı saat ve alarm takibi yapın.</p>
+                <a href="Saat uygulaması/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-check-circle"></i>
+                <h2>Seçim Sihirbazı</h2>
+                <p>Karar vermekte zorlandığınızda size yardımcı olur.</p>
+                <a href="Seçim Sihirbazı/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-thermometer-half"></i>
+                <h2>Sıcaklık Çevirici</h2>
+                <p>Celcius, Fahrenheit ve Kelvin arasında hızlı dönüşüm.</p>
+                <a href="Sıcaklık çevirici/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-hand-rock"></i>
+                <h2>Taş Kağıt Makas Oyunu</h2>
+                <p>Arkadaşlarınızla veya bilgisayara karşı oynayın.</p>
+                <a href="taş kağıt makas oyunu/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-dice"></i>
+                <h2>Zar Atma Uygulaması</h2>
+                <p>Rastgele zar atın ve şansınızı deneyin.</p>
+                <a href="Zar Atma Uygulaması/index.html">Aç</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-lock"></i>
+                <h2>Şifre Yöneticisi</h2>
+                <p>Şifrelerinizi güvenli şekilde saklayın ve yönetin.</p>
+                <a href="Şifre Yöneticisi/index.html">Aç</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
