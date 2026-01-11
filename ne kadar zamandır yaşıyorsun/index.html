@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ne Kadar Zamandır Yaşıyorsun?</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fa-solid fa-hourglass-half"></i> Yaşam Sayacı</h1>
+            <p>Hayatınızın her saniyesi değerli. Ne kadar süredir bu yolculuktasınız?</p>
+        </header>
+
+        <section class="input-section">
+            <div class="input-group">
+                <label for="birthdate">Doğum Tarihiniz ve Saatiniz</label>
+                <input type="datetime-local" id="birthdate">
+            </div>
+            <button id="calculate-btn">Hesapla <i class="fa-solid fa-calculator"></i></button>
+        </section>
+
+        <section id="results" class="results-section hidden">
+            <h2 class="section-title">Yaşam Süreniz</h2>
+            
+            <div class="main-stats">
+                <div class="stat-card highlight">
+                    <div class="icon"><i class="fa-solid fa-cake-candles"></i></div>
+                    <div class="value" id="age-text">0 Yıl</div>
+                    <div class="label">Tam Yaşınız</div>
+                </div>
+            </div>
+
+            <div class="detailed-stats-grid">
+                <div class="stat-card">
+                    <div class="value" id="total-months">0</div>
+                    <div class="label">Ay</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="total-weeks">0</div>
+                    <div class="label">Hafta</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="total-days">0</div>
+                    <div class="label">Gün</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="total-hours">0</div>
+                    <div class="label">Saat</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="total-minutes">0</div>
+                    <div class="label">Dakika</div>
+                </div>
+                <div class="stat-card animate-pulse">
+                    <div class="value" id="total-seconds">0</div>
+                    <div class="label">Saniye</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">İlginç İstatistikler</h2>
+            <div class="fun-stats-grid">
+                <div class="fun-card">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                    <span id="total-seasons">0</span>
+                    <p>Mevsim Gördünüz</p>
+                </div>
+                <div class="fun-card">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <span id="leap-years">0</span>
+                    <p>29 Şubat Geçirdiniz</p>
+                </div>
+                <div class="fun-card">
+                    <i class="fa-solid fa-bed"></i>
+                    <span id="sleep-time">0 Yıl</span>
+                    <p>Uykuda Geçen Tahmini Süre</p>
+                </div>
+                <div class="fun-card">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <span id="heartbeats">0</span>
+                    <p>Tahmini Kalp Atışı (Milyar)</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

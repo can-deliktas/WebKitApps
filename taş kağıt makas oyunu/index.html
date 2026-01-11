@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taş Kağıt Makas - Premium Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="background-animation"></div>
+
+    <div class="app-container">
+        
+        <!-- MAIN MENU -->
+        <section id="main-menu" class="screen active">
+            <h1 class="game-title">Taş <span class="highlight">Kağıt</span> Makas</h1>
+            <div class="menu-buttons">
+                <button class="btn primary" onclick="startGame('pvc')">
+                    <i class="fa-solid fa-robot"></i> Bilgisayara Karşı
+                </button>
+                <button class="btn secondary" onclick="startGame('pvp')">
+                    <i class="fa-solid fa-user-group"></i> İki Kişilik
+                </button>
+                <button class="btn outline" onclick="showSettings()">
+                    <i class="fa-solid fa-gear"></i> Ayarlar
+                </button>
+            </div>
+        </section>
+
+        <!-- GAME SCREEN -->
+        <section id="game-screen" class="screen hidden">
+            <header class="game-header">
+                <button class="icon-btn" onclick="returnToMenu()"><i class="fa-solid fa-arrow-left"></i></button>
+                <div class="score-board">
+                    <div class="player-score">
+                        <span id="p1-name">Oyuncu 1</span>
+                        <span id="score-p1" class="score">0</span>
+                    </div>
+                    <div class="score-divider">:</div>
+                    <div class="player-score">
+                        <span id="score-p2" class="score">0</span>
+                        <span id="p2-name">Bilgisayar</span>
+                    </div>
+                </div>
+                <!-- Hedef Skor Göstergesi -->
+                <div class="target-score-display">Hedef: <span id="display-target">3</span></div>
+            </header>
+
+            <div class="game-arena">
+                <!-- Player 1 Side -->
+                <div class="player-area" id="p1-area">
+                    <div class="hand-container">
+                        <i class="fa-regular fa-hand-back-fist hand-icon" id="p1-hand"></i>
+                    </div>
+                    <div class="controls" id="p1-controls">
+                        <button class="choice-btn rock" onclick="makeMove('rock', 1)"><i class="fa-regular fa-hand-back-fist"></i></button>
+                        <button class="choice-btn paper" onclick="makeMove('paper', 1)"><i class="fa-regular fa-hand"></i></button>
+                        <button class="choice-btn scissors" onclick="makeMove('scissors', 1)"><i class="fa-regular fa-hand-scissors"></i></button>
+                    </div>
+                    <div class="turn-indicator" id="p1-turn">Sıra Sende!</div>
+                </div>
+
+                <!-- Result Message Area -->
+                <div class="result-area">
+                    <h2 id="round-result">VS</h2>
+                </div>
+
+                <!-- Player 2 Side -->
+                <div class="player-area" id="p2-area">
+                    <div class="hand-container">
+                        <i class="fa-regular fa-hand-back-fist hand-icon" id="p2-hand"></i>
+                    </div>
+                    <!-- Controls for P2 (Only visible in PvP local mode) -->
+                    <div class="controls hidden" id="p2-controls">
+                        <button class="choice-btn rock" onclick="makeMove('rock', 2)"><i class="fa-regular fa-hand-back-fist"></i></button>
+                        <button class="choice-btn paper" onclick="makeMove('paper', 2)"><i class="fa-regular fa-hand"></i></button>
+                        <button class="choice-btn scissors" onclick="makeMove('scissors', 2)"><i class="fa-regular fa-hand-scissors"></i></button>
+                    </div>
+                    <div class="turn-indicator hidden" id="p2-turn">Sıra Oyuncu 2'de!</div>
+                </div>
+            </div>
+            
+            <!-- Round End Overlay (Optional, or handled inline) -->
+            <button id="next-round-btn" class="btn primary small hidden" onclick="nextRound()">Sonraki Tur</button>
+        </section>
+
+        <!-- SETTINGS SCREEN -->
+        <section id="settings-screen" class="screen hidden">
+            <h2 class="screen-title">Ayarlar</h2>
+            <div class="setting-group">
+                <label>Hedef Skor (Kazanma Limiti)</label>
+                <div class="selector">
+                    <button class="sel-btn active" onclick="setTargetScore(3)">3</button>
+                    <button class="sel-btn" onclick="setTargetScore(5)">5</button>
+                    <button class="sel-btn" onclick="setTargetScore(10)">10</button>
+                </div>
+            </div>
+            <button class="btn primary" onclick="returnToMenu()">Kaydet ve Çık</button>
+        </section>
+        
+        <!-- WINNER OVERLAY -->
+        <div id="winner-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <i class="fa-solid fa-trophy trophy-icon"></i>
+                <h2 id="winner-text">Oyuncu 1 Kazandı!</h2>
+                <button class="btn primary" onclick="resetGame()">Yeniden Oyna</button>
+                <button class="btn secondary" onclick="returnToMenu()">Menüye Dön</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

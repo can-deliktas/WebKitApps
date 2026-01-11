@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Süper Zar Atma</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Zar Atma</h1>
+            <p style="color: var(--text-secondary);">İstediğin kadar zar at, şansını dene!</p>
+        </header>
+
+        <div class="controls-panel">
+            <div class="control-group">
+                <label for="diceCount">Zar Sayısı</label>
+                <input type="number" id="diceCount" min="1" max="50" value="2">
+            </div>
+
+            <div class="control-group">
+                <label for="dieColor">Zar Rengi</label>
+                <input type="color" id="dieColor" value="#ffffff">
+            </div>
+            
+            <div class="control-group">
+                <label for="dotColor">Nokta Rengi</label>
+                <input type="color" id="dotColor" value="#1e293b">
+            </div>
+
+            <div class="control-group">
+                <label for="dieShape">Şekil</label>
+                <select id="dieShape">
+                    <option value="rounded">Kare (Yuvarlatılmış)</option>
+                    <option value="circle">Yuvarlak</option>
+                </select>
+            </div>
+
+            <button id="rollBtn" class="btn-primary">ZAR AT</button>
+        </div>
+
+        <div id="diceContainer" class="dice-container">
+            <!-- Zarlar buraya gelecek -->
+        </div>
+
+        <div id="totalDisplay" class="total-display">
+            Toplam: <span id="totalValue" class="total-value">0</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

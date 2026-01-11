@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastgele Şifre Oluşturucu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Şifre Oluşturucu</h1>
+        
+        <div class="result-container">
+            <span id="result"></span>
+            <button class="btn" id="clipboard" title="Kopyala">
+                <i class="far fa-copy"></i>
+            </button>
+        </div>
+
+        <div class="settings">
+            <div class="setting">
+                <label>Şifre Uzunluğu</label>
+                <input type="number" id="length" min="4" max="20" value="10">
+            </div>
+            <div class="setting">
+                <label>Harfler (a-z, A-Z)</label>
+                <input type="checkbox" id="letters" checked>
+            </div>
+            <div class="setting">
+                <label>Sayılar (0-9)</label>
+                <input type="checkbox" id="numbers" checked>
+            </div>
+            <div class="setting">
+                <label>Özel Karakterler (!@#$%^&*)</label>
+                <input type="checkbox" id="symbols" checked>
+            </div>
+        </div>
+
+        <button class="btn btn-large" id="generate">
+            Şifre Oluştur
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

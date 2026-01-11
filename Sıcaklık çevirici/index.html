@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sıcaklık Çevirici Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h1>Sıcaklık Çevirici</h1>
+            <p class="subtitle">Hızlı ve Hassas Dönüşüm</p>
+            
+            <div class="converter-box">
+                <div class="input-group">
+                    <label for="amount">Sıcaklık Değeri</label>
+                    <input type="number" id="amount" placeholder="Örn: 25" step="any">
+                </div>
+
+                <div class="units-container">
+                    <div class="select-group">
+                        <label for="fromUnit">Dönüştürülecek Birim</label>
+                        <select id="fromUnit">
+                            <option value="C">Celsius (°C)</option>
+                            <option value="F">Fahrenheit (°F)</option>
+                            <option value="K">Kelvin (K)</option>
+                        </select>
+                    </div>
+
+                    <div class="exchange-icon" id="swapBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4M7 4L3 8M7 4L11 8"/><path d="M17 8v12M17 20l4-4M17 20l-4-4"/></svg>
+                    </div>
+
+                    <div class="select-group">
+                        <label for="toUnit">Hedef Birim</label>
+                        <select id="toUnit">
+                            <option value="F" selected>Fahrenheit (°F)</option>
+                            <option value="C">Celsius (°C)</option>
+                            <option value="K">Kelvin (K)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="convertBtn">Çevir</button>
+            </div>
+
+            <div class="result-box hidden" id="resultBox">
+                <div class="result-text" id="resultText">--</div>
+                <div class="result-detail" id="resultDetail"></div>
+            </div>
+            
+            <div id="alertBox" class="alert-box hidden">
+                <span class="alert-icon">⚠️</span>
+                <span id="alertMessage">Uyarı mesajı</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

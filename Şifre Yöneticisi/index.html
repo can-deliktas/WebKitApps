@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Güvenli Şifre Yöneticisi</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Bildirim Alanı -->
+    <div id="toast-container"></div>
+
+    <div class="container">
+        <!-- GİRİŞ EKRANI -->
+        <div id="auth-view" class="glass-panel fade-in">
+            <div class="auth-header">
+                <i class="fa-solid fa-shield-halved logo-icon"></i>
+                <h1>Şifre Kasası</h1>
+                <p id="auth-subtitle">Kasanızı oluşturmak için bir ana şifre belirleyin.</p>
+            </div>
+            
+            <form id="auth-form">
+                <div class="input-group">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="master-password" placeholder="Ana Şifre" required autocomplete="off">
+                    <button type="button" class="toggle-password" tabindex="-1"><i class="fa-solid fa-eye"></i></button>
+                </div>
+                
+                <div id="confirm-password-group" class="input-group" style="display: none;">
+                    <i class="fa-solid fa-check-double input-icon"></i>
+                    <input type="password" id="confirm-password" placeholder="Şifreyi Tekrarla" autocomplete="off">
+                </div>
+
+                <button type="submit" id="auth-btn" class="primary-btn">
+                    Kasayı Oluştur
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+            
+            <div class="auth-footer">
+                <button id="import-btn-auth" class="text-btn small"><i class="fa-solid fa-file-import"></i> Yedekten Geri Yükle</button>
+                <input type="file" id="restore-file-input" accept=".json,.enc" style="display: none;">
+            </div>
+        </div>
+
+        <!-- ANA KASA EKRANI (DASHBOARD) -->
+        <div id="dashboard-view" class="glass-panel fade-in" style="display: none;">
+            <header class="dashboard-header">
+                <div class="logo-small">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Kasa</span>
+                </div>
+                <div class="header-actions">
+                    <button id="export-btn" class="icon-btn" title="Yedekle (Dışa Aktar)"><i class="fa-solid fa-download"></i></button>
+                    <button id="logout-btn" class="icon-btn logout" title="Güvenli Çıkış"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </header>
+
+            <div class="search-bar">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="search-input" placeholder="Şifrelerimde ara...">
+            </div>
+
+            <div class="password-list-container">
+                <div id="empty-state" class="empty-state">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <p>Kasanız boş.</p>
+                    <p class="sub-text">Yeni bir şifre ekleyerek başlayın.</p>
+                </div>
+                <ul id="password-list" class="password-list">
+                    <!-- Şifreler buraya JS ile eklenecek -->
+                </ul>
+            </div>
+
+            <button id="add-fab" class="fab-btn">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: YENİ ŞİFRE EKLE / DÜZENLE -->
+    <div id="password-modal" class="modal-overlay" style="display: none;">
+        <div class="modal glass-panel slide-up">
+            <div class="modal-header">
+                <h2 id="modal-title">Yeni Kayıt</h2>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="password-form">
+                <input type="hidden" id="edit-id">
+                
+                <div class="form-group">
+                    <label>Başlık / Site Adı</label>
+                    <div class="input-group">
+                        <i class="fa-solid fa-globe input-icon"></i>
+                        <input type="text" id="entry-title" placeholder="Örn: Facebook, Gmail" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Kullanıcı Adı / E-posta</label>
+                    <div class="input-group">
+                        <i class="fa-solid fa-user input-icon"></i>
+                        <input type="text" id="entry-username" placeholder="kullanici@mail.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Şifre</label>
+                    <div class="input-group">
+                        <i class="fa-solid fa-key input-icon"></i>
+                        <input type="password" id="entry-password" required>
+                        <button type="button" class="toggle-password" tabindex="-1"><i class="fa-solid fa-eye"></i></button>
+                        <button type="button" id="generate-pass-btn" class="action-btn" title="Rastgele Şifre Üret"><i class="fa-solid fa-dice"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Şifre Üretici Ayarları (Collapse) -->
+                <div id="generator-options" class="generator-options" style="display: none;">
+                   <div class="range-slider">
+                        <label>Uzunluk: <span id="pass-length-val">16</span></label>
+                        <input type="range" id="pass-length" min="8" max="64" value="16">
+                   </div>
+                   <div class="checkboxes">
+                       <label><input type="checkbox" id="inc-upper" checked> ABC</label>
+                       <label><input type="checkbox" id="inc-numbers" checked> 123</label>
+                       <label><input type="checkbox" id="inc-symbols" checked> #!&</label>
+                   </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Notlar (İsteğe Bağlı)</label>
+                    <textarea id="entry-notes" rows="3" placeholder="Ekstra bilgiler..."></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-btn close-modal-btn">İptal</button>
+                    <button type="submit" class="primary-btn">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: DETAY GÖRÜNTÜLEME -->
+     <div id="detail-modal" class="modal-overlay" style="display: none;">
+        <div class="modal glass-panel slide-up">
+            <div class="modal-header">
+                <div class="detail-header-content">
+                    <div class="icon-box"><i class="fa-solid fa-lock"></i></div>
+                    <h2 id="detail-title">Başlık</h2>
+                </div>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="detail-body">
+                <div class="detail-row">
+                    <label>Kullanıcı Adı</label>
+                    <div class="copy-row">
+                        <span id="detail-username">...</span>
+                        <button class="copy-btn" data-target="detail-username"><i class="fa-regular fa-copy"></i></button>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <label>Şifre</label>
+                    <div class="copy-row">
+                        <span id="detail-password" class="masked">••••••••</span>
+                        <div class="d-flex">
+                            <button id="detail-toggle-pass" class="icon-action"><i class="fa-solid fa-eye"></i></button>
+                            <button class="copy-btn" data-target="detail-password"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-row" id="detail-notes-container">
+                    <label>Notlar</label>
+                    <p id="detail-notes">...</p>
+                </div>
+            </div>
+            <div class="modal-actions center">
+                <button id="edit-entry-btn" class="secondary-btn"><i class="fa-solid fa-pen"></i> Düzenle</button>
+                <button id="delete-entry-btn" class="danger-btn"><i class="fa-solid fa-trash"></i> Sil</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

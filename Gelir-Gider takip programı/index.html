@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelir-Gider Takip Programı</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Cüzdanım</h1>
+            <p>Aylık gelir ve giderlerinizi kolayca yönetin</p>
+        </header>
+
+        <div class="dashboard">
+            <!-- Bakiye Kartı -->
+            <div class="card balance-card">
+                <div class="balance-title">Toplam Bakiye</div>
+                <div class="balance-amount" id="total-balance">₺0.00</div>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-label">Gelir</div>
+                        <div class="summary-value income" id="total-income">+₺0.00</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Gider</div>
+                        <div class="summary-value expense" id="total-expense">-₺0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- İşlem Ekleme Formu -->
+            <div class="card">
+                <h2>➕ Yeni İşlem Ekle</h2>
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="text">Açıklama</label>
+                        <input type="text" id="text" class="form-control" placeholder="Örn: Maaş, Kira..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Tutar</label>
+                        <input type="number" id="amount" class="form-control" placeholder="Tutar girin" required>
+                        <small style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 5px; display: block;">
+                            (Pozitif: Gelir, Negatif: Gider) <br> Örn: 5000 veya -1500
+                        </small>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addTransaction()">İşlemi Ekle</button>
+                    <!-- Type selector as alternative to negative numbers could be nice but keeping it simple as per prompt flow, but I will improve UX in JS to handle types seamlessly if user prefers inputs -->
+                </form>
+            </div>
+
+            <!-- Geçmiş -->
+            <div class="card">
+                <h2>📜 İşlem Geçmişi</h2>
+                <div class="list-container">
+                    <ul id="list" class="list">
+                        <!-- JS ile doldurulacak -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tavsiyeler -->
+            <div class="card recommendations" id="recommendation-card" style="display: none;">
+                <h2>💡 Tavsiyeler</h2>
+                <ul class="recommendation-list" id="recommendation-list">
+                    <!-- JS ile doldurulacak -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

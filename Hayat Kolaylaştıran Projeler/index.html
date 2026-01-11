@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hayat Kolaylaştıran Projeler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="background-animation"></div>
+
+    <main class="app-container">
+        <!-- GLOBAL HEADER (Visible in Apps) -->
+        <header id="global-header" class="hidden">
+            <button class="icon-btn" onclick="router.goHome()">
+                <i class="fa-solid fa-house"></i>
+            </button>
+            <h2 id="current-app-title">Uygulama Adı</h2>
+            <div style="width: 40px;"></div> <!-- Spacer -->
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="screen active">
+            <h1 class="main-title">Merkez Üssü</h1>
+            <p class="subtitle">Hayatınızı kolaylaştıracak 12 araç</p>
+
+            <div class="app-grid">
+                <!-- 1. Gelir-Gider -->
+                <div class="app-card" onclick="router.openApp('budget')">
+                    <i class="fa-solid fa-wallet option-icon"></i>
+                    <h3>Bütçe Takibi</h3>
+                </div>
+                <!-- 2. Kelime İstatistik -->
+                <div class="app-card" onclick="router.openApp('text-stats')">
+                    <i class="fa-solid fa-align-left option-icon"></i>
+                    <h3>Kelime Analizi</h3>
+                </div>
+                <!-- 3. Para Çevirici -->
+                <div class="app-card" onclick="router.openApp('currency')">
+                    <i class="fa-solid fa-money-bill-transfer option-icon"></i>
+                    <h3>Döviz Çevirici</h3>
+                </div>
+                <!-- 4. Şifre Oluşturucu -->
+                <div class="app-card" onclick="router.openApp('password-gen')">
+                    <i class="fa-solid fa-key option-icon"></i>
+                    <h3>Şifre Oluşturucu</h3>
+                </div>
+                <!-- 5. Seçim Sihirbazı -->
+                <div class="app-card" onclick="router.openApp('decision')">
+                    <i class="fa-solid fa-wand-magic-sparkles option-icon"></i>
+                    <h3>Karar Çarkı</h3>
+                </div>
+                <!-- 6. Sıcaklık Çevirici -->
+                <div class="app-card" onclick="router.openApp('temp')">
+                    <i class="fa-solid fa-temperature-three-quarters option-icon"></i>
+                    <h3>Sıcaklık</h3>
+                </div>
+                <!-- 7. Zar Atma -->
+                <div class="app-card" onclick="router.openApp('dice')">
+                    <i class="fa-solid fa-dice option-icon"></i>
+                    <h3>Zar At</h3>
+                </div>
+                <!-- 8. Yaş Hesaplayıcı -->
+                <div class="app-card" onclick="router.openApp('life-time')">
+                    <i class="fa-solid fa-hourglass-start option-icon"></i>
+                    <h3>Yaşam Sayacı</h3>
+                </div>
+                <!-- 9. Saat -->
+                <div class="app-card" onclick="router.openApp('clock')">
+                    <i class="fa-solid fa-clock option-icon"></i>
+                    <h3>Dijital Saat</h3>
+                </div>
+                <!-- 10. Şifre Kasa -->
+                <div class="app-card" onclick="router.openApp('vault')">
+                    <i class="fa-solid fa-lock option-icon"></i>
+                    <h3>Şifre Kasası</h3>
+                </div>
+                <!-- 11. Taş Kağıt Makas -->
+                <div class="app-card" onclick="router.openApp('rps')">
+                    <i class="fa-solid fa-hand-scissors option-icon"></i>
+                    <h3>Taş Kağıt Makas</h3>
+                </div>
+                <!-- 12. Adam Asmaca -->
+                <div class="app-card" onclick="router.openApp('hangman')">
+                    <i class="fa-solid fa-skull option-icon"></i>
+                    <h3>Adam Asmaca</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- === APP VIEWS === -->
+
+        <!-- 1. BUDGET APP -->
+        <section id="app-budget" class="screen hidden">
+            <div class="budget-input">
+                <select id="budget-type">
+                    <option value="income">Gelir (+)</option>
+                    <option value="expense">Gider (-)</option>
+                </select>
+                <input type="text" id="budget-desc" placeholder="Açıklama (Örn: Maaş)">
+                <input type="number" id="budget-amount" placeholder="Tutar">
+                <button class="btn primary" onclick="apps.budget.addEntry()">Ekle</button>
+            </div>
+            <div class="budget-summary">
+                <div>Net: <span id="budget-total">0</span> ₺</div>
+            </div>
+            <div id="budget-advice" class="alert-box hidden"></div>
+            <ul id="budget-list" class="item-list"></ul>
+        </section>
+
+        <!-- 2. TEXT STATS -->
+        <section id="app-text-stats" class="screen hidden">
+            <textarea id="text-input" placeholder="Metni buraya yapıştırın..." rows="5"></textarea>
+            <button class="btn primary" onclick="apps.textStats.analyze()">Analiz Et</button>
+            <div id="text-results" class="stats-grid hidden">
+                <div class="stat-box">Harf: <span id="stat-char">0</span></div>
+                <div class="stat-box">Kelime: <span id="stat-word">0</span></div>
+                <div class="stat-box">Sesli: <span id="stat-vowel">0</span></div>
+                <div class="stat-box">Sessiz: <span id="stat-consonant">0</span></div>
+            </div>
+        </section>
+
+        <!-- 3. CURRENCY -->
+        <section id="app-currency" class="screen hidden">
+            <div class="converter-box">
+                <input type="number" id="curr-amount" value="1">
+                <select id="curr-from">
+                    <option value="TRY">TRY (Türk Lirası)</option>
+                    <option value="USD">USD (Dolar)</option>
+                    <option value="EUR">EUR (Euro)</option>
+                </select>
+                <i class="fa-solid fa-arrow-right"></i>
+                <select id="curr-to">
+                    <option value="USD">USD (Dolar)</option>
+                    <option value="TRY" selected>TRY (Türk Lirası)</option>
+                    <option value="EUR">EUR (Euro)</option>
+                </select>
+            </div>
+            <button class="btn primary" onclick="apps.currency.convert()">Çevir</button>
+            <div id="curr-result" class="result-text"></div>
+        </section>
+
+        <!-- 4. PASSWORD GEN -->
+        <section id="app-password-gen" class="screen hidden">
+            <div class="control-row">
+                <label>Uzunluk: <span id="pwd-len-val">12</span></label>
+                <input type="range" id="pwd-length" min="4" max="32" value="12"
+                    oninput="document.getElementById('pwd-len-val').innerText=this.value">
+            </div>
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="pwd-upper" checked> ABC</label>
+                <label><input type="checkbox" id="pwd-lower" checked> abc</label>
+                <label><input type="checkbox" id="pwd-num" checked> 123</label>
+                <label><input type="checkbox" id="pwd-special"> !@#</label>
+            </div>
+            <button class="btn primary" onclick="apps.passwordGen.generate()">Oluştur</button>
+            <div id="pwd-result" class="result-box copiable" onclick="apps.common.copy(this)"></div>
+        </section>
+
+        <!-- 5. DECISION WIZARD -->
+        <section id="app-decision" class="screen hidden">
+            <textarea id="decision-input" placeholder="Seçenekleri alt alta yazın..."></textarea>
+            <div class="control-row">
+                <label>Tekrar Sayısı:</label>
+                <input type="number" id="decision-repeat" value="1" min="1" max="1000">
+            </div>
+            <button class="btn primary" onclick="apps.decision.decide()">Seçim Yap</button>
+            <div id="decision-result" class="result-text"></div>
+        </section>
+
+        <!-- 6. TEMP CONVERTER -->
+        <section id="app-temp" class="screen hidden">
+            <div class="converter-box">
+                <input type="number" id="temp-val" placeholder="Değer">
+                <select id="temp-unit-from">
+                    <option value="C">Celcius (°C)</option>
+                    <option value="F">Fahrenheit (°F)</option>
+                    <option value="K">Kelvin (K)</option>
+                </select>
+                <i class="fa-solid fa-arrow-right"></i>
+                <select id="temp-unit-to">
+                    <option value="F">Fahrenheit (°F)</option>
+                    <option value="C" selected>Celcius (°C)</option>
+                    <option value="K">Kelvin (K)</option>
+                </select>
+            </div>
+            <button class="btn primary" onclick="apps.temp.convert()">Çevir</button>
+            <div id="temp-result" class="result-text"></div>
+        </section>
+
+        <!-- 7. DICE -->
+        <section id="app-dice" class="screen hidden">
+            <div class="control-row">
+                <label>Zar Sayısı:</label>
+                <input type="number" id="dice-count" value="1" min="1" max="6">
+            </div>
+            <button class="btn primary" onclick="apps.dice.roll()">Zar At</button>
+            <div id="dice-container" class="dice-area"></div>
+        </section>
+
+        <!-- 8. LIFE TIME -->
+        <section id="app-life-time" class="screen hidden">
+            <label>Doğum Tarihiniz:</label>
+            <input type="datetime-local" id="life-dob">
+            <button class="btn primary" onclick="apps.life.calculate()">Hesapla</button>
+            <div id="life-stats" class="stats-list hidden">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- 9. CLOCK -->
+        <section id="app-clock" class="screen hidden">
+            <input type="color" id="clock-color" value="#ffffff"
+                onchange="document.getElementById('clk-display').style.color=this.value">
+            <div class="clock-display" id="clk-display">
+                <div id="clk-time">00:00:00</div>
+                <div id="clk-date">01 Ocak 2025</div>
+            </div>
+            <div class="clock-controls">
+                <button class="btn sm" onclick="apps.clock.toggleDate()">Tarihi Gizle/Göster (T)</button>
+            </div>
+        </section>
+
+        <!-- 10. VAULT -->
+        <section id="app-vault" class="screen hidden">
+            <div id="vault-auth">
+                <h3>Kasa Şifresi</h3>
+                <input type="password" id="vault-master-input" placeholder="Ana Şifre">
+                <button class="btn primary" onclick="apps.vault.login()">Giriş</button>
+            </div>
+            <div id="vault-content" class="hidden">
+                <div class="input-group">
+                    <input type="text" id="vault-site" placeholder="Site/Uygulama">
+                    <input type="text" id="vault-pass" placeholder="Şifre">
+                    <button class="btn sm" onclick="apps.vault.add()">Kaydet</button>
+                </div>
+                <ul id="vault-list" class="item-list"></ul>
+                <button class="btn text-danger" onclick="apps.vault.logout()">Kilitle</button>
+            </div>
+        </section>
+
+        <!-- 11. RPS (Rock Paper Scissors) -->
+        <section id="app-rps" class="screen hidden">
+            <div class="rps-scores">
+                <div class="score-box">Siz: <span id="rps-user-score">0</span></div>
+                <div class="score-box">CPU: <span id="rps-cpu-score">0</span></div>
+            </div>
+            <div class="rps-arena">
+                <div id="rps-user-move" class="move-icon"><i class="fa-regular fa-hand-rock"></i></div>
+                <div class="vs-text">VS</div>
+                <div id="rps-cpu-move" class="move-icon"><i class="fa-regular fa-hand-rock"></i></div>
+            </div>
+            <div class="rps-controls">
+                <button class="rps-btn" onclick="apps.rps.play('rock')"><i class="fa-regular fa-hand-rock"></i></button>
+                <button class="rps-btn" onclick="apps.rps.play('paper')"><i
+                        class="fa-regular fa-hand-paper"></i></button>
+                <button class="rps-btn" onclick="apps.rps.play('scissors')"><i
+                        class="fa-regular fa-hand-scissors"></i></button>
+            </div>
+            <div id="rps-result" class="result-text"></div>
+        </section>
+
+        <!-- 12. HANGMAN (Existing) -->
+        <section id="app-hangman" class="screen hidden">
+            <!-- Emdedded Hangman HTML from previous step inside this section -->
+            <div id="hangman-game-content">
+                <!-- Menu -->
+                <div id="hm-menu" class="sub-screen active">
+                    <button class="btn primary" onclick="apps.hangman.setup('single')">Tek Kişilik</button>
+                    <button class="btn secondary" onclick="apps.hangman.setup('multi')">İki Kişilik</button>
+                </div>
+
+                <!-- Setup -->
+                <div id="hm-setup" class="sub-screen hidden">
+                    <select id="hm-cat">
+                        <option value="random">Rastgele</option>
+                        <option value="movies">Filmler</option>
+                        <option value="cities">Şehirler</option>
+                    </select>
+                    <input type="password" id="hm-secret" class="hidden" placeholder="Gizli Kelime">
+                    <button class="btn primary" onclick="apps.hangman.start()">Başla</button>
+                </div>
+
+                <!-- Game -->
+                <div id="hm-game" class="sub-screen hidden">
+                    <div class="score-board">
+                        <span>Puan: <b id="hm-score">0</b></span>
+                        <span id="hm-lives">❤❤❤❤❤❤</span>
+                    </div>
+                    <div class="hangman-draw-area">
+                        <svg id="hangman-svg" viewBox="0 0 200 250" style="height:150px">
+                            <!-- Will be drawn by JS -->
+                            <line x1="20" y1="230" x2="100" y2="230" class="draw-base" />
+                            <line x1="60" y1="230" x2="60" y2="20" class="draw-base" />
+                            <line x1="60" y1="20" x2="140" y2="20" class="draw-base" />
+                            <line x1="140" y1="20" x2="140" y2="50" class="draw-base" />
+                        </svg>
+                    </div>
+                    <div id="hm-word" class="word-display"></div>
+                    <div id="hm-keyboard" class="keyboard-container"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
